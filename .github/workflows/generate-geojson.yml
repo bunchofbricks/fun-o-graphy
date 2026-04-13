@@ -1,26 +1,43 @@
 name: Generate GeoJSON
- 
+
 on:
   push:
     branches:
       - main
- 
+
 permissions:
   contents: write
- 
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
- 
+
       - name: Generate map/cities.geojson from cities/*.md
         run: python3 scripts/convert.py
- 
-      - name: Commit and push if changed
+
+      - name: Create PR if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet map/cities.geojson; then
+            echo "No changes, skipping PR."
+            exit 0
+          fi
+
+          BRANCH="bot/update-geojson"
+          git checkout -b "$BRANCH"
           git add map/cities.geojson
-          git diff --cached --quiet || git commit -m "chore: regenerate cities.geojson"
-          git push
+          git commit -m "chore: regenerate cities.geojson"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "chore: regenerate cities.geojson" \
+            --body "Automatically generated from \`cities/*.md\` by the Generate GeoJSON workflow." \
+            --base main \
+            --head "$BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

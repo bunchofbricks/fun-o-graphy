@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [50.77113,7.63955]
+      },
+      "properties": {
+        "name": "Geilhausen",
+        "category": "Germany",
+        "visible": true
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [60.5326162,8.2007087]
+      },
+      "properties": {
+        "name": "Geilo",
+        "category": "Norway",
+        "visible": true
+      }
+    }
+
+  ]
+}

@@ -1,0 +1,8 @@
+services:
+  fun-o-graphy:
+    image: 'nginx:latest'
+    container_name: 'fun-o-graphy'
+    volumes:
+      - './data/index.html:/usr/share/nginx/html/index.html:ro'
+      - './map/cities.geojson:/usr/share/nginx/html/cities.geojson:ro'
+    restart: 'unless-stopped'

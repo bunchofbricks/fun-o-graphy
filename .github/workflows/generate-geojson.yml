@@ -1,0 +1,23 @@
+name: Generate GeoJSON
+ 
+on:
+  push:
+    branches:
+      - main
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+ 
+      - name: Generate map/cities.geojson from cities/*.md
+        run: python3 scripts/convert.py
+ 
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add map/cities.geojson
+          git diff --cached --quiet || git commit -m "chore: regenerate cities.geojson"
+          git push

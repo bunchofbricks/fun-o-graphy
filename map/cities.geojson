@@ -1,12 +1,14 @@
 {
   "type": "FeatureCollection",
   "features": [
-
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [7.63955,50.77113]
+        "coordinates": [
+          7.63955,
+          50.77113
+        ]
       },
       "properties": {
         "name": "Geilhausen",
@@ -14,12 +16,14 @@
         "visible": true
       }
     },
-
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [8.2007087,60.5326162]
+        "coordinates": [
+          8.2007087,
+          60.5326162
+        ]
       },
       "properties": {
         "name": "Geilo",
@@ -27,6 +31,5 @@
         "visible": true
       }
     }
-
   ]
 }

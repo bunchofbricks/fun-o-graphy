@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fun-O-Graphy</title>
 
-  <link href="https://unpkg.com/maplibre-gl@5.23.0/dist/maplibre-gl.css" rel="stylesheet" />
-  <script src="https://unpkg.com/maplibre-gl@5.23.0/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
 
   <style>
@@ -495,14 +495,7 @@ document.getElementById('btn-theme').addEventListener('click', () => {
 async function loadGeoJSON() {
   const res = await fetch(GEOJSON_URL);
   if (!res.ok) throw new Error(`Failed to load GeoJSON: HTTP ${res.status}`);
-  const geojson = await res.json();
-  // GeoJSON standard requires [lon, lat], but we accept [lat, lon] in the file
-  // for easier data entry — swap here so MapLibre receives the correct order.
-  geojson.features.forEach(f => {
-    const [lat, lon] = f.geometry.coordinates;
-    f.geometry.coordinates = [lon, lat];
-  });
-  return geojson;
+  return res.json();
 }
 
 function filterVisible(geojson) {
@@ -519,8 +512,8 @@ function popupHTML(p, coords) {
   return `
     <div class="popup-name">${p.name}</div>
     ${p.info ? `<div class="popup-row">Info <span>${p.info}</span></div>` : ''}
-    <div class="popup-row">Lat <span>${(+coords[1]).toFixed(4)}</span></div>
     <div class="popup-row">Lon <span>${(+coords[0]).toFixed(4)}</span></div>
+    <div class="popup-row">Lat <span>${(+coords[1]).toFixed(4)}</span></div>
     <div class="popup-cat ${p.category === 'secondary' ? 'secondary' : ''}">${p.category || 'default'}</div>
   `;
 }
